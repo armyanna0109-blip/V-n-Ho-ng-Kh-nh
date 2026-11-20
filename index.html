@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#f8dce8"><title>Portfolio – Đỗ Hoàng Khánh Vân</title><style>
+html,body{margin:0;min-height:100%;font-family:system-ui,sans-serif;background:#fff7fa;color:#71485a}
+#loading{min-height:100vh;display:grid;place-items:center;text-align:center;padding:24px;box-sizing:border-box}
+#bar{width:min(280px,70vw);height:5px;background:#f1d5e1;border-radius:9px;overflow:hidden;margin:16px auto}
+#bar span{display:block;height:100%;width:35%;background:#d98cac;border-radius:9px;animation:move 1.2s ease-in-out infinite alternate}
+@keyframes move{to{transform:translateX(185%)}}
+</style></head><body><div id="loading"><div><div style="font-size:38px">♡</div><p>Đang mở portfolio…</p><div id="bar"><span></span></div><small>Vui lòng giữ trang trong giây lát.</small></div></div>
+<script>
+(async()=>{const count=16;try{
+const files=Array.from({length:count},(_,i)=>'./portfolio/part-'+String(i).padStart(3,'0')+'.txt');
+const pieces=await Promise.all(files.map(async u=>{const r=await fetch(u);if(!r.ok)throw new Error('Không tải được '+u);return r.text()}));
+const html=pieces.join('');
+if(!html.startsWith('<!DOCTYPE html>')&&!html.startsWith('<!doctype html>'))throw new Error('Nội dung không hợp lệ');
+document.open();document.write(html);document.close();
+}catch(e){document.getElementById('loading').innerHTML='<div><h2>Không tải được portfolio</h2><p>Hãy tải lại trang hoặc thử lại sau.</p><small>'+String(e.message||e)+'</small></div>'}})();
+</script></body></html>
